@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController; // 追加
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,5 +41,9 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 
 Route::middleware(['auth', 'verified'])->get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
+// ユーザー登録のためのルート
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 require __DIR__.'/auth.php';
+
