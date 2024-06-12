@@ -27,6 +27,18 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     })->name('user.menu');
 });
 
+Route::middleware(['auth', 'role:社内管理者'])->group(function () {
+    Route::get('/admin-menu', function () {
+        return view('admin-menu');
+    })->name('admin.menu');
+});
+
+Route::middleware(['auth', 'role:事務員'])->group(function () {
+    Route::get('/user-menu', function () {
+        return view('user-menu');
+    })->name('user.menu');
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

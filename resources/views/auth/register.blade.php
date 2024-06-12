@@ -50,7 +50,7 @@
                                 <label for="role">{{ __('Role') }}</label>
                                 <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
                                     @foreach($roles as $role)
-                                        @if ($role->name !== 'アプリ保守管理者') <!-- 'アプリ保守管理者'を除外 -->
+                                        @if ($role->name !== 'アプリ保守管理者')
                                             <option value="{{ $role->name }}">{{ $role->name }}</option>
                                         @endif
                                     @endforeach

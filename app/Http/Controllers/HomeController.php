@@ -22,10 +22,10 @@ class HomeController extends Controller
             $roles = $user->getRoleNames(); // ロール名を取得
             Log::info('User roles', ['roles' => $roles]);
 
-            if ($user->hasRole('admin')) {
+            if ($user->hasRole('社内管理者')) {
                 Log::info('Redirecting to admin menu');
                 return redirect()->route('admin.menu');
-            } elseif ($user->hasRole('user')) {
+            } elseif ($user->hasRole('事務員')) {
                 Log::info('Redirecting to user menu');
                 return redirect()->route('user.menu');
             } else {

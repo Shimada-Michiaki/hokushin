@@ -3,50 +3,36 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
-
-       // ログイン後のリダイレクト先
-       protected function authenticated(Request $request, $user)
-       {
-           if ($user->name === 'runfree_admin') {
-               return redirect('/special-menu');
-           } elseif ($user->name === 'admin'){
-               return redirect('/admin-menu');
-           } else {
-            return redirect('/main-menu');
-           }
-       }
-
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    public function __construct()
+    public function login(Request $request)
     {
-        $this->middleware('guest')->except('logout');
-    }
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-    // ログインユーザーに応じたリダイレクト先を設定
-    protected function redirectTo()
-    {
-        if (auth()->user()->name == 'runfree_admin') {
-            return '/special-menu';
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->route('dashboard');
         }
 
-        return '/main-menu';
-    }
-    
-    public function username()
-    {
-        return 'name';
+        throw ValidationException::withMessages([
+            'email' => __('auth.failed'),
+        ]);
     }
 
-    protected function credentials(Request $request)
+    public function logout(Request $request)
     {
-        return $request->only($this->username(), 'password');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }
