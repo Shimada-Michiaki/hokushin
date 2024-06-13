@@ -5,6 +5,12 @@
     "src": "resources/js/app.js",
     "isEntry": true
   },
+  "resources/js/tabControl.js": {
+    "file": "assets/tabControl-CNAtdWLB.js",
+    "name": "tabControl",
+    "src": "resources/js/tabControl.js",
+    "isEntry": true
+  },
   "resources/sass/app.scss": {
     "file": "assets/app-9kx3olKa.css",
     "src": "resources/sass/app.scss",
