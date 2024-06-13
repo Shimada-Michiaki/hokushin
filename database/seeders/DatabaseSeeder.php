@@ -14,32 +14,81 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 既存のロールを削除
-        Role::where('name', 'admin')->orWhere('name', 'user')->delete();
+        // 権限の作成
+        $this->createPermissions();
 
-        // ロール作成
-        $adminRole = Role::firstOrCreate(['name' => '社内管理者']);
-        $userRole = Role::firstOrCreate(['name' => '事務員']);
+        // ロールの作成
+        $adminRole = $this->createOrUpdateRole('社内管理者');
+        $userRole = $this->createOrUpdateRole('事務員');
+        $runfreeAdminRole = $this->createOrUpdateRole('アプリ保守管理者');
+        $manufacturerRole = $this->createOrUpdateRole('製造');
+        $outsideOrderRole = $this->createOrUpdateRole('外注');
+        $shippingRole = $this->createOrUpdateRole('出荷');
 
-        // 権限作成
-        $registerPermission = Permission::firstOrCreate(['name' => 'admin']);
+        // ロールに権限を付与
+        $this->assignPermissionsToRole($adminRole, ['admin', 'view-any']);
+        $this->assignPermissionsToRole($runfreeAdminRole, ['admin', 'view-any']);
+        $this->assignPermissionsToRole($manufacturerRole, ['view-製造']);
+        $this->assignPermissionsToRole($outsideOrderRole, ['view-外注']);
+        $this->assignPermissionsToRole($shippingRole, ['view-出荷']);
+        $this->assignPermissionsToRole($userRole, ['view-any']);
 
-        // admin役割にregister権限を付与
-        $adminRole->givePermissionTo($registerPermission);
+        // ユーザーの作成とロールの割り当て
+        $this->createOrUpdateUser('hokushinnitta@gmail.com', 'admin', 'mihara369', $adminRole);
+        $this->createOrUpdateUser('test@gmail.com', 'test', 'testtest', $userRole);
+    }
 
-        // ユーザー作成
-        $AdminUser = User::updateOrCreate(
-            ['email' => 'hokushinnitta@gmail.com'],
-            ['name' => 'admin', 'password' => bcrypt('mihara369')]
+    /**
+     * 権限の作成
+     */
+    private function createPermissions()
+    {
+        $permissions = ['admin', 'view-any', 'view-製造', 'view-出荷', 'view-外注'];
+
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+    }
+
+    /**
+     * ロールの作成または更新
+     *
+     * @param string $roleName
+     * @return \Spatie\Permission\Models\Role
+     */
+    private function createOrUpdateRole(string $roleName): Role
+    {
+        return Role::updateOrCreate(['name' => $roleName]);
+    }
+
+    /**
+     * ユーザーの作成または更新
+     *
+     * @param string $email
+     * @param string $name
+     * @param string $password
+     * @param \Spatie\Permission\Models\Role $role
+     */
+    private function createOrUpdateUser(string $email, string $name, string $password, Role $role)
+    {
+        $user = User::updateOrCreate(
+            ['email' => $email],
+            ['name' => $name, 'password' => bcrypt($password)]
         );
 
-        $normalUser = User::updateOrCreate(
-            ['email' => 'test@gmail.com'],
-            ['name' => 'test', 'password' => bcrypt('testtest')]
-        );
+        $user->assignRole($role);
+    }
 
-        // ユーザーにロールを割り当て
-        $AdminUser->assignRole($adminRole);
-        $normalUser->assignRole($userRole);
+    /**
+     * ロールに権限を付与
+     *
+     * @param \Spatie\Permission\Models\Role $role
+     * @param array $permissions
+     */
+    private function assignPermissionsToRole(Role $role, array $permissions)
+    {
+        foreach ($permissions as $permission) {
+            $role->givePermissionTo($permission);
+        }
     }
 }

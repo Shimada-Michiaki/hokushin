@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: localhost
--- 生成日時: 2024 年 6 月 10 日 00:34
+-- 生成日時: 2024 年 6 月 13 日 20:37
 -- サーバのバージョン： 10.4.28-MariaDB
 -- PHP のバージョン: 8.2.4
 
@@ -38,7 +38,9 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:1:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"admin\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}}s:5:\"roles\";a:1:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"admin\";s:1:\"c\";s:3:\"web\";}}}', 1718033474);
+('gaityuu|127.0.0.1', 'i:1;', 1718300492),
+('gaityuu|127.0.0.1:timer', 'i:1718300492;', 1718300492),
+('spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:5:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:5:\"admin\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:3;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:8:\"view-any\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:3;i:2;i:2;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:11:\"view-製造\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:4;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:11:\"view-出荷\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:6;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:11:\"view-外注\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:5;}}}s:5:\"roles\";a:6:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:15:\"社内管理者\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:3;s:1:\"b\";s:24:\"アプリ保守管理者\";s:1:\"c\";s:3:\"web\";}i:2;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:9:\"事務員\";s:1:\"c\";s:3:\"web\";}i:3;a:3:{s:1:\"a\";i:4;s:1:\"b\";s:6:\"製造\";s:1:\"c\";s:3:\"web\";}i:4;a:3:{s:1:\"a\";i:6;s:1:\"b\";s:6:\"出荷\";s:1:\"c\";s:3:\"web\";}i:5;a:3:{s:1:\"a\";i:5;s:1:\"b\";s:6:\"外注\";s:1:\"c\";s:3:\"web\";}}}', 1718386804);
 
 -- --------------------------------------------------------
 
@@ -73,12 +75,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2024_06_09_212753_remove_existing_roles', 3),
 (7, '2024_06_09_215703_remove_existing_roles', 4),
 (8, '2024_06_09_220853_remove_existing_roles', 5),
-(25, '2024_05_25_123029_create_sessions_table', 6),
-(26, '2024_05_25_123029_create_users_table', 6),
-(27, '2024_06_07_204911_create_permission_tables', 6),
-(28, '2024_06_08_100649_create_cache_table', 6),
-(29, '2024_06_09_221450_remove_existing_roles', 6),
-(30, '2024_06_09_235235_remove_role_from_users_table', 7);
+(31, '2024_05_25_123029_create_sessions_table', 6),
+(32, '2024_05_25_123029_create_users_table', 6),
+(33, '2024_06_07_204911_create_permission_tables', 6),
+(34, '2024_06_08_100649_create_cache_table', 6),
+(35, '2024_06_09_221450_remove_existing_roles', 6),
+(36, '2024_06_09_235235_remove_role_from_users_table', 6);
 
 -- --------------------------------------------------------
 
@@ -109,9 +111,17 @@ CREATE TABLE `model_has_roles` (
 --
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
-(2, 'App\\Models\\User', 2),
 (1, 'App\\Models\\User', 1),
-(1, 'App\\Models\\User', 3);
+(2, 'App\\Models\\User', 2),
+(1, 'App\\Models\\User', 3),
+(2, 'App\\Models\\User', 4),
+(3, 'App\\Models\\User', 5),
+(6, 'App\\Models\\User', 6),
+(4, 'App\\Models\\User', 7),
+(4, 'App\\Models\\User', 8),
+(6, 'App\\Models\\User', 9),
+(1, 'App\\Models\\User', 10),
+(2, 'App\\Models\\User', 11);
 
 -- --------------------------------------------------------
 
@@ -132,7 +142,11 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'web', '2024-06-09 14:21:37', '2024-06-09 14:21:37');
+(1, 'admin', 'web', '2024-06-12 21:23:01', '2024-06-12 21:23:01'),
+(2, 'view-any', 'web', '2024-06-13 16:01:50', '2024-06-13 16:01:50'),
+(3, 'view-製造', 'web', '2024-06-13 16:01:50', '2024-06-13 16:01:50'),
+(4, 'view-出荷', 'web', '2024-06-13 16:01:50', '2024-06-13 16:01:50'),
+(5, 'view-外注', 'web', '2024-06-13 16:01:50', '2024-06-13 16:01:50');
 
 -- --------------------------------------------------------
 
@@ -153,8 +167,12 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'web', '2024-06-09 14:21:37', '2024-06-09 14:21:37'),
-(2, 'user', 'web', '2024-06-09 14:21:37', '2024-06-09 14:21:37');
+(1, '社内管理者', 'web', '2024-06-12 21:23:01', '2024-06-12 21:23:01'),
+(2, '事務員', 'web', '2024-06-12 21:23:01', '2024-06-12 21:23:01'),
+(3, 'アプリ保守管理者', 'web', '2024-06-12 22:06:45', '2024-06-12 22:06:45'),
+(4, '製造', 'web', '2024-06-12 22:06:45', '2024-06-12 22:06:45'),
+(5, '外注', 'web', '2024-06-12 22:06:45', '2024-06-12 22:06:45'),
+(6, '出荷', 'web', '2024-06-12 22:06:45', '2024-06-12 22:06:45');
 
 -- --------------------------------------------------------
 
@@ -172,7 +190,14 @@ CREATE TABLE `role_has_permissions` (
 --
 
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
-(1, 1);
+(1, 1),
+(1, 3),
+(2, 1),
+(2, 3),
+(3, 4),
+(5, 5),
+(4, 6),
+(2, 2);
 
 -- --------------------------------------------------------
 
@@ -206,9 +231,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'hokushinnitta@gmail.com', '$2y$12$Ag5jaxiB1l284/Vxk65zCuAnj3/4GmCsgaFE2rDKQoqFbdMxeeRey', '2024-06-09 14:21:36', '2024-06-09 14:40:53'),
-(2, 'test', 'test@gmail.com', '$2y$12$NZLLT2QZ708FX4isQdYLv.kl3ss3zjYeHFjZfUtS7YJ00X6EMX3DO', '2024-06-09 14:21:37', '2024-06-09 14:21:37'),
-(3, 'test2', 'test2@test.com', '$2y$12$FXqQ21./7FkyVXKx0W/gs.9J2bXcmTtlYvZ7ARSfqZGI6C4QnJpRK', '2024-06-09 15:08:22', '2024-06-09 15:31:49');
+(1, 'admin', 'hokushinnitta@gmail.com', '$2y$12$g25fcJ6FXYo3qAf6dptP3O6HNsqWkYmsU1u96HVpJ98VIXjBrnrim', '2024-06-12 21:23:01', '2024-06-13 17:07:30'),
+(2, 'test', 'test@gmail.com', '$2y$12$F8u5AQsM7EEiPZCVhHVhH.AabZKkGhN10Mt6KhXN5/z6ivf3/mVzi', '2024-06-12 21:23:01', '2024-06-13 17:07:30'),
+(3, 'test2', 'test2@gmail.com', '$2y$12$KMQHjAFO//HkJHTJeytfVuGa5TVRf7q9Y0SZq24qZGnZDqlPfVTtK', '2024-06-12 21:45:05', '2024-06-12 21:45:05'),
+(5, 'runfree_admin', 'shimada.724@gmail.com', '$2y$12$xuQwGMMhc9mXIb/OMNUMme7prm8zSZfDiOdnw0bsRGkNHdJu/frty', '2024-06-12 22:06:46', '2024-06-12 22:06:46'),
+(8, '製造', 'seizou@gmail.com', '$2y$12$Zeo3h90ljJU2YAq25K04J.gCt3WaEpIoRjtT8SyVRqLL6CxYaCPzO', '2024-06-13 17:17:11', '2024-06-13 17:17:11'),
+(9, '出荷', 'syukka@gmail.com', '$2y$12$E83FbJx6XBMmlYj9X9sY5eWWoIqF5Uak58ZLor0fSIJfAmwGy34QO', '2024-06-13 17:17:46', '2024-06-13 17:17:46'),
+(10, '外注', 'gaityuu@gamil.com', '$2y$12$zT5yF3qo6W7a0xaMgokqDu2jVo.cWcxRK9lwZSShADsrKwn/mSctC', '2024-06-13 17:18:40', '2024-06-13 17:18:40'),
+(11, '事務', 'jimu@gmail.com', '$2y$12$mDctRBKdTh5oiHoueYXXq.P/62vMtXsgT3H4fg27b7h8dC4zvq.Qu', '2024-06-13 17:46:42', '2024-06-13 17:46:42');
 
 --
 -- ダンプしたテーブルのインデックス
@@ -286,19 +316,19 @@ ALTER TABLE `users`
 -- テーブルの AUTO_INCREMENT `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- テーブルの AUTO_INCREMENT `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- テーブルの AUTO_INCREMENT `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- テーブルの AUTO_INCREMENT `sessions`
@@ -310,7 +340,7 @@ ALTER TABLE `sessions`
 -- テーブルの AUTO_INCREMENT `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- ダンプしたテーブルの制約

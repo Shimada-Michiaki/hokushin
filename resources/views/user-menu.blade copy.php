@@ -2,104 +2,54 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>管理者メニュー</h1>
+<h1>メニュー</h1>
 <p>Welcome, {{ Auth::user()->name }}!</p>
     <div class="container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">ユーザーマスタ</button>
+                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">受注処理</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">得意先マスタ</button>
+                <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">材料発注処理</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">製品マスタ</button>
+                <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">外注手配</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">外注先マスタ</button>
+                <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">生産処理</button>
             </li>
-            <!-- <li class="nav-item" role="presentation">
-                <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">その他</button>
-            </li> -->
-            <!-- <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">出荷処理</button>
+            </li>
+            <li class="nav-item" role="presentation">
                 <button class="nav-link" id="tab6-tab" data-bs-toggle="tab" data-bs-target="#tab6" type="button" role="tab" aria-controls="tab6" aria-selected="false">出荷処理</button>
-            </li> -->
+            </li>
 
             <!-- More tabs as needed -->
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
                 <!-- Content for Tab 1 -->
-                <form action="{{ route('users.store') }}" method="POST">
-
-                <div class="container">
-                    <h2>Create New User</h2>
-                    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-    <!-- <form action="{{ route('users.store') }}" method="POST"> -->
-        @csrf
-        <div class="row">
-            <div class="col-md-6">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="col-md-6">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" autocomplete="new-email" required>
-            </div>
-            <div class="col-md-6">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" autocomplete="new-password" required>
-            </div>
-            <div class="col-md-6">
-                <label for="password_confirmation" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" autocomplete="new-password" required>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Create User</button>
-    </form>
-</div>
-                </div>
-
-
-
-
-
-
-<!-- 
-                <div class="row">
+                <form>
+                        <div class="col-md-2">
+                            <label for="exampleInput1" class="form-label">データNo</label>
+                            <input type="text" class="form-control" id="exampleInput1">
+                        </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <label for="exampleInput1" class="form-label">名前</label>
+                            <label for="exampleInput1" class="form-label">日付</label>
                             <input type="text" class="form-control" id="exampleInput1">
                         </div>
                         <div class="col-md-3">
-                            <label for="exampleInput2" class="form-label">メールアドレス</label>
+                            <label for="exampleInput2" class="form-label">製品コード</label>
                             <input type="text" class="form-control" id="exampleInput2">
                         </div>
-                         <div class="col-md-6">
+                        <div class="col-md-6">
                             <label for="exampleInput2" class="form-label">製品名</label>
                             <input type="text" class="form-control" id="exampleInput2">
-                        </div> -->
-                    <!-- </div> -->
-                    <!-- <div class="row">
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-2">
                             <label for="exampleInput2" class="form-label">ロット数</label>
                             <input type="text" class="form-control" id="exampleInput2">
@@ -116,10 +66,10 @@
                             <label for="exampleInput2" class="form-label">備考</label>
                             <input type="text" class="form-control" id="exampleInput2">
                         </div>
-                    </div> -->
+                    </div>
                     <!-- More inputs as needed -->
-                <!-- </form>
-            </div> --> 
+                </form>
+            </div>
             <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                 <!-- Content for Tab 2 -->
                 <form>
@@ -339,9 +289,4 @@
             <button type="button" class="btn btn-secondary">修正</button>
         </div>
     </div>
-    <script>
-    document.querySelector('form').addEventListener('submit', function(event) {
-        console.log('Form is being submitted');
-    });
-</script>
 @endsection

@@ -15,29 +15,24 @@ Route::get('/', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 // ロールごとのルートを設定
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin-menu', function () {
-        return view('admin-menu');
-    })->name('admin.menu');
-});
-
-Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user-menu', function () {
-        return view('user-menu');
-    })->name('user.menu');
-});
-
 Route::middleware(['auth', 'role:社内管理者'])->group(function () {
     Route::get('/admin-menu', function () {
         return view('admin-menu');
     })->name('admin.menu');
 });
 
-Route::middleware(['auth', 'role:事務員'])->group(function () {
+Route::middleware(['auth', 'role:事務員|製造|外注|出荷'])->group(function () {
     Route::get('/user-menu', function () {
         return view('user-menu');
     })->name('user.menu');
 });
+
+Route::middleware(['auth', 'role:アプリ保守管理者'])->group(function () {
+    Route::get('/special-menu', function () {
+        return view('special-menu');
+    })->name('special.menu');
+});
+
 
 
 Route::middleware('auth')->group(function () {
@@ -56,6 +51,12 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', [HomeController::clas
 // ユーザー登録のためのルート
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+
+// 強制ログアウトのためのルート
+Route::get('/temporary-logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('temporary.logout');
 
 require __DIR__.'/auth.php';
 

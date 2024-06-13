@@ -8,11 +8,21 @@ use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index()
     {
         $user = Auth::user();
@@ -25,17 +35,19 @@ class HomeController extends Controller
             if ($user->hasRole('社内管理者')) {
                 Log::info('Redirecting to admin menu');
                 return redirect()->route('admin.menu');
-            } elseif ($user->hasRole('事務員')) {
+            } elseif ($user->hasRole(['事務員', '製造', '外注', '出荷'])) {
                 Log::info('Redirecting to user menu');
                 return redirect()->route('user.menu');
+            } elseif ($user->hasRole('アプリ保守管理者')) {
+                Log::info('Redirecting to special menu');
+                return redirect()->route('special.menu');
             } else {
                 Log::info('No matching roles found');
+                return redirect()->route('dashboard')->with('user', $user);
             }
         } catch (\Exception $e) {
             Log::error('Error checking roles or redirecting', ['error' => $e->getMessage()]);
             return response()->view('errors.custom', [], 500);
         }
-
-        return view('dashboard');
     }
 }
