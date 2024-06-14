@@ -8,7 +8,7 @@
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             @can('view-any')
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">受注処理</button>
+                <button class="nav-link" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">受注処理</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">材料発注処理</button>
@@ -61,7 +61,6 @@
             <button type="button" class="btn btn-secondary">修正</button>
         </div>
     </div>
-    @vite('resources/js/tabControl.js')
 @endsection
 
 

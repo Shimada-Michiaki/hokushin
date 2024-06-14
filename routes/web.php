@@ -5,11 +5,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController; // 追加
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/dashboard', function () {
+    $user = Auth::user();
+    $roles = $user->getRoleNames(); // ロール名を取得
+    session(['user_roles' => $roles]);
+
+    return view('dashboard');
+})->middleware(['auth']);
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -51,6 +60,16 @@ Route::middleware(['auth', 'verified'])->get('/dashboard', [HomeController::clas
 // ユーザー登録のためのルート
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+
+// AuthenticatedSessionControllerのためのルート
+Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    ->name('login');
+
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
 
 // 強制ログアウトのためのルート
 Route::get('/temporary-logout', function () {

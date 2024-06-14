@@ -31,6 +31,7 @@ class HomeController extends Controller
         try {
             $roles = $user->getRoleNames(); // ロール名を取得
             Log::info('User roles', ['roles' => $roles]);
+            session(['user_roles' => $roles]); // ロールをセッションに保存
 
             if ($user->hasRole('社内管理者')) {
                 Log::info('Redirecting to admin menu');
